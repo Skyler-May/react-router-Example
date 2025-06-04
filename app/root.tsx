@@ -68,17 +68,17 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <ThemeProvider
-        storageKey="theme"
-        defaultTheme="system"
-        enableSystem
-        disableTransitionOnChange
-      >
-        <body>
+      <body>
+        <ThemeProvider
+          storageKey="theme"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
           <SidebarProvider>
             <AppSidebar />
             <main className="flex-1 flex flex-col w-full h-full ">
-              <header className="sticky top-0 z-50 flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 ">
+              <header className="sticky top-0 z-50 flex h-16 shrink-0 items-center justify-between bg-card text-foreground border-b border-border  ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
                 <div className="flex items-center gap-2 px-4">
                   <SidebarTrigger className="-ml-1" />
                   <Separator
@@ -99,7 +99,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                     </BreadcrumbList>
                   </Breadcrumb>
                 </div>
-                <div className="flex items-center gap-2 px-4">
+                <div className="flex items-center gap-2 px-4 ml-auto">
                   <ThemeSwitcher />
                   <ModeToggle />
                 </div>
@@ -109,8 +109,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
               <Scripts />
             </main>
           </SidebarProvider>
-        </body>
-      </ThemeProvider>
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
