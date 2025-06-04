@@ -85,3 +85,60 @@ This template comes with [Tailwind CSS](https://tailwindcss.com/) already config
 ---
 
 Built with ❤️ using React Router.
+
+```
+react-router-Example
+├─ .dockerignore
+├─ app
+│  ├─ app.css
+│  ├─ components
+│  │  ├─ app-sidebar.tsx
+│  │  ├─ nav-main.tsx
+│  │  ├─ nav-projects.tsx
+│  │  ├─ nav-user.tsx
+│  │  ├─ team-switcher.tsx
+│  │  └─ ui
+│  │     ├─ avatar.tsx
+│  │     ├─ breadcrumb.tsx
+│  │     ├─ button.tsx
+│  │     ├─ collapsible.tsx
+│  │     ├─ dropdown-menu.tsx
+│  │     ├─ input.tsx
+│  │     ├─ separator.tsx
+│  │     ├─ sheet.tsx
+│  │     ├─ sidebar.tsx
+│  │     ├─ skeleton.tsx
+│  │     └─ tooltip.tsx
+│  ├─ hooks
+│  │  └─ use-mobile.ts
+│  ├─ lib
+│  │  └─ utils.ts
+│  ├─ pages
+│  │  └─ test.tsx
+│  ├─ root.tsx
+│  ├─ routes
+│  │  ├─ dashboard.tsx
+│  │  ├─ home.tsx
+│  │  └─ testpage.tsx
+│  ├─ routes.ts
+│  └─ welcome
+│     ├─ logo-dark.svg
+│     ├─ logo-light.svg
+│     └─ welcome.tsx
+├─ assets
+│  └─ images
+│     └─ svg
+├─ components.json
+├─ Dockerfile
+├─ package.json
+├─ pnpm-lock.yaml
+├─ public
+│  ├─ avatars
+│  │  └─ shadcn.jpg
+│  └─ favicon.ico
+├─ react-router.config.ts
+├─ README.md
+├─ tsconfig.json
+└─ vite.config.ts
+
+```
