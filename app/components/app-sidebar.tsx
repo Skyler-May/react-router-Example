@@ -21,12 +21,7 @@ import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
-  SidebarGroup,
-  SidebarGroupLabel,
   SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
   SidebarRail,
 } from "~/components/ui/sidebar";
 
@@ -55,14 +50,12 @@ const data = {
     },
   ],
 
-  // This is the active item.
-  dashboard: {
-    title: "仪表盘",
-    url: "/",
-    icon: Home,
-  },
-
   navMain: [
+    {
+      title: "Dashboard",
+      url: "/",
+      icon: Home,
+    },
     {
       title: "Playground",
       url: "#",
@@ -175,19 +168,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <TeamSwitcher teams={data.teams} />
       </SidebarHeader>
       <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>Dashboard</SidebarGroupLabel>
-          <SidebarMenu>
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild>
-                <a href={data.dashboard.url}>
-                  <data.dashboard.icon />
-                  <span>{data.dashboard.title}</span>
-                </a>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          </SidebarMenu>
-        </SidebarGroup>
         <NavMain items={data.navMain} />
         <NavProjects projects={data.projects} />
       </SidebarContent>

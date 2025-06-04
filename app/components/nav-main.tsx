@@ -32,11 +32,30 @@ export function NavMain({
     }[];
   }[];
 }) {
+  const dashboardItems = items.filter((item) => !item.items);
+  const platformItems = items.filter((item) => item.items && item.items.length);
+
   return (
     <SidebarGroup>
+      {/* 仪表盘区域 */}
+      <SidebarGroupLabel>Dashboard</SidebarGroupLabel>
+      <SidebarMenu>
+        {dashboardItems.map((item) => (
+          <SidebarMenuItem key={item.title}>
+            <SidebarMenuButton asChild>
+              <a href={item.url}>
+                {item.icon && <item.icon />}
+                <span>{item.title}</span>
+              </a>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        ))}
+      </SidebarMenu>
+
+      {/* 平台区域 */}
       <SidebarGroupLabel>Platform</SidebarGroupLabel>
       <SidebarMenu>
-        {items.map((item) => (
+        {platformItems.map((item) => (
           <Collapsible
             key={item.title}
             asChild
