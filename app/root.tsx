@@ -20,6 +20,29 @@ import {
   BreadcrumbSeparator,
   BreadcrumbPage,
 } from "./components/ui/breadcrumb";
+import { ThemeSwitcher } from "./theme/theme-switcher";
+import { ModeToggle } from "./theme/mode-toggle";
+import { ThemeProvider } from "./theme/theme-provider";
+
+// 添加预加载脚本，防止闪白屏
+const themePreloadScript = `
+  (function() {
+    try {
+      const storageKey = "theme";
+      const theme = localStorage.getItem(storageKey) || "system";
+      const isDark = theme === "dark" || 
+        (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+      
+      // 在HTML加载前应用主题类，防止闪烁
+      document.documentElement.classList.add(isDark ? "dark" : "light");
+      
+      // 设置背景颜色，防止白屏
+      document.documentElement.style.backgroundColor = isDark ? "#0c0a09" : "#ffffff";
+    } catch (e) {
+      console.error("Theme preload failed:", e);
+    }
+  })();
+`;
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -36,48 +59,58 @@ export const links: Route.LinksFunction = () => [
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        {/* 添加内联脚本，在页面加载前执行 */}
+        <script dangerouslySetInnerHTML={{ __html: themePreloadScript }} />
         <Meta />
         <Links />
       </head>
-      {/* <body>
-        {children}
-        <ScrollRestoration />
-        <Scripts />
-      </body> */}
-      <SidebarProvider>
-        <AppSidebar />
-        <main className="flex-1 flex flex-col w-full h-full ">
-          <header className="sticky top-0 z-50 flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 ">
-            <div className="flex items-center gap-2 px-4">
-              <SidebarTrigger className="-ml-1" />
-              <Separator
-                orientation="vertical"
-                className="mr-2 data-[orientation=vertical]:h-4"
-              />
-              <Breadcrumb>
-                <BreadcrumbList>
-                  <BreadcrumbItem className="hidden md:block">
-                    <BreadcrumbLink href="#">
-                      Building Your Application
-                    </BreadcrumbLink>
-                  </BreadcrumbItem>
-                  <BreadcrumbSeparator className="hidden md:block" />
-                  <BreadcrumbItem>
-                    <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-                  </BreadcrumbItem>
-                </BreadcrumbList>
-              </Breadcrumb>
-            </div>
-          </header>
-          {children}
-          <ScrollRestoration />
-          <Scripts />
-        </main>
-      </SidebarProvider>
+      <ThemeProvider
+        storageKey="theme"
+        defaultTheme="system"
+        enableSystem
+        disableTransitionOnChange
+      >
+        <body>
+          <SidebarProvider>
+            <AppSidebar />
+            <main className="flex-1 flex flex-col w-full h-full ">
+              <header className="sticky top-0 z-50 flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 ">
+                <div className="flex items-center gap-2 px-4">
+                  <SidebarTrigger className="-ml-1" />
+                  <Separator
+                    orientation="vertical"
+                    className="mr-2 data-[orientation=vertical]:h-4"
+                  />
+                  <Breadcrumb>
+                    <BreadcrumbList>
+                      <BreadcrumbItem className="hidden md:block">
+                        <BreadcrumbLink href="#">
+                          Building Your Application
+                        </BreadcrumbLink>
+                      </BreadcrumbItem>
+                      <BreadcrumbSeparator className="hidden md:block" />
+                      <BreadcrumbItem>
+                        <BreadcrumbPage>Data Fetching</BreadcrumbPage>
+                      </BreadcrumbItem>
+                    </BreadcrumbList>
+                  </Breadcrumb>
+                </div>
+                <div className="flex items-center gap-2 px-4">
+                  <ThemeSwitcher />
+                  <ModeToggle />
+                </div>
+              </header>
+              {children}
+              <ScrollRestoration />
+              <Scripts />
+            </main>
+          </SidebarProvider>
+        </body>
+      </ThemeProvider>
     </html>
   );
 }
